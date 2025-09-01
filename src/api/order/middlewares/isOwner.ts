@@ -13,19 +13,15 @@ export default (config, { strapi }: { strapi: Core.Strapi }) => {
     if ( user.role.name === 'Admin' ) {
       return await next();
     } else {
-      let owner = await strapi.documents('plugin::users-permissions.user').findOne({
-        documentId: user.documentId,
-        populate: ['customer']
-      })
       const documentId = ctx.params.id? ctx.params.id : undefined;
 
       if (documentId) {
-        const stock = await strapi.documents('api::stock.stock').findOne({
+        const order = await strapi.documents('api::order.order').findOne({
           documentId,
-          populate: ['dealer']
+          populate: ['customer']
         });
 
-        if (owner.customer.documentId !== stock.dealer?.documentId) {
+        if (user.documentId !== order.customer?.documentId) {
           return ctx.unauthorized('你没有权限进行操作。');
         }
       }

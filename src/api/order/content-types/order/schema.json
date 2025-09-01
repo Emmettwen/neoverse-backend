@@ -1,0 +1,81 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "order"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    },
+    "qty": {
+      "type": "integer"
+    },
+    "code": {
+      "type": "string"
+    },
+    "brokerServer": {
+      "type": "string"
+    },
+    "brokerName": {
+      "type": "string"
+    },
+    "transactionAccount": {
+      "type": "string"
+    },
+    "binding": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string"
+    },
+    "generatedDate": {
+      "type": "datetime"
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "productName": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "paymentPic": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "orderStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "used"
+      ]
+    },
+    "duration": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
