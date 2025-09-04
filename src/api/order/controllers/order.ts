@@ -22,7 +22,8 @@ export default factories.createCoreController('api::order.order', ({ strapi }) =
     },
     async approve(ctx) {
         const {id} = ctx.params;
-        const order = await strapi.service('api::order.order').generateCode(id);
+        const { rate } = ctx.request.body;
+        const order = await strapi.service('api::order.order').generateCode(id, rate);
         if (order) {
             return {
                 success: true,

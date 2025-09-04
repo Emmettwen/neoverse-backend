@@ -76,6 +76,15 @@
     "duration": {
       "type": "integer",
       "default": 0
+    },
+    "group": {
+      "type": "enumeration",
+      "enum": [
+        "g00",
+        "g01",
+        "g02",
+        "g03"
+      ]
     }
   }
 }
