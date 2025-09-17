@@ -30,7 +30,7 @@ export default factories.createCoreService('api::order.order', ({ strapi }) =>  
         const start_date = dayjs();
         const end_date = start_date.add(order.duration, 'day');
         if (order) {
-            const result = await axios.post('https://ea.pseedr.com/manage/api/generate_single', {
+            const result = await axios.post('https://ea.neo-verse.cn/manage/api/generate_single', {
                 end_date: end_date.format('YYYY-MM-DD'),
                 group_id: groupId,
                 start_date: start_date.format('YYYY-MM-DD'),
