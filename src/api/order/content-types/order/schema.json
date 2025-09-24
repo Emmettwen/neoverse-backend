@@ -70,7 +70,9 @@
         "pending",
         "approved",
         "rejected",
-        "used"
+        "used",
+        "unbinding",
+        "unbind"
       ]
     },
     "duration": {
@@ -85,6 +87,12 @@
         "g02",
         "g03"
       ]
+    },
+    "keys": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::key.key",
+      "mappedBy": "order"
     }
   }
 }

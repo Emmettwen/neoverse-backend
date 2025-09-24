@@ -15,6 +15,16 @@ export default {
             method: 'POST',
             path: '/orders/:id/bind',
             handler: 'order.bind',
+        },
+        {
+            method: 'POST',
+            path: '/orders/:id/unbind',
+            handler: 'order.unbind',
+        },
+        {
+            method: 'POST',
+            path: '/orders/:id/customer-unbind',
+            handler: 'order.customerUnbind',
         }
     ]
 }

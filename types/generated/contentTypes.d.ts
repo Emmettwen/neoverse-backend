@@ -373,6 +373,39 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiKeyKey extends Struct.CollectionTypeSchema {
+  collectionName: 'keys';
+  info: {
+    displayName: 'Key';
+    pluralName: 'keys';
+    singularName: 'key';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    binded: Schema.Attribute.String;
+    brokerName: Schema.Attribute.String;
+    brokerServer: Schema.Attribute.String;
+    code: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    duration: Schema.Attribute.Integer;
+    endDate: Schema.Attribute.String;
+    generatedDate: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::key.key'> &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
+    publishedAt: Schema.Attribute.DateTime;
+    transactionAccount: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
   collectionName: 'orders';
   info: {
@@ -399,11 +432,12 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     endDate: Schema.Attribute.String;
     generatedDate: Schema.Attribute.DateTime;
     group: Schema.Attribute.Enumeration<['g00', 'g01', 'g02', 'g03']>;
+    keys: Schema.Attribute.Relation<'oneToMany', 'api::key.key'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
       Schema.Attribute.Private;
     orderStatus: Schema.Attribute.Enumeration<
-      ['pending', 'approved', 'rejected', 'used']
+      ['pending', 'approved', 'rejected', 'used', 'unbinding', 'unbind']
     >;
     paymentPic: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
@@ -991,6 +1025,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::key.key': ApiKeyKey;
       'api::order.order': ApiOrderOrder;
       'api::product.product': ApiProductProduct;
       'api::setting.setting': ApiSettingSetting;
