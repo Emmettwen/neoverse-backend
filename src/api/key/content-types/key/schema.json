@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "keys",
+  "info": {
+    "singularName": "key",
+    "pluralName": "keys",
+    "displayName": "Key"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "code": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "brokerServer": {
+      "type": "string"
+    },
+    "brokerName": {
+      "type": "string"
+    },
+    "transactionAccount": {
+      "type": "string"
+    },
+    "generatedDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "string"
+    },
+    "binded": {
+      "type": "string"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::order.order",
+      "inversedBy": "keys"
+    }
+  }
+}

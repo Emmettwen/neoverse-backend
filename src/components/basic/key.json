@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_basic_keys",
+  "info": {
+    "displayName": "Key",
+    "icon": "key"
+  },
+  "options": {},
+  "attributes": {
+    "code": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "integer"
+    }
+  },
+  "config": {}
+}
