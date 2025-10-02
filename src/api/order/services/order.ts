@@ -23,7 +23,7 @@ export default factories.createCoreService('api::order.order', ({ strapi }) =>  
             }
         })
     },
-    async generateCode(orderId: string, groupId: string = '00') {
+    async generateCode(orderId: string, groupId: '00'|'01'|'02'|'03' = '00') {
         const order = await strapi.documents('api::order.order').findOne({
             documentId: orderId,
             populate: ['product']
@@ -32,41 +32,39 @@ export default factories.createCoreService('api::order.order', ({ strapi }) =>  
         const end_date = start_date.add(order.duration, 'day');
         if (order) {
             let list = []
-            let dateInfo = {
-                end_date: end_date.format('YYYYMMDD'),
-                generated_at: dayjs().format('YYYYMMDDHHmmss')
-            }
-            for (let i = 0; i < order.qty; i++) {
-                const result = await axios.post('https://ea.neo-verse.cn/manage/api/generate_single', {
-                    end_date: end_date.format('YYYY-MM-DD'),
-                    group_id: groupId,
-                    start_date: start_date.format('YYYY-MM-DD'),
-                });
-                console.log(result.data.regcode);
-                if (result.data.success) {
+            const result = await axios.post('https://ea.neo-verse.cn/manage/api/generate_batch', {
+                end_date: end_date.format('YYYY-MM-DD'),
+                group_ids: groupId.toString(),
+                count: order.qty,
+                start_date: start_date.format('YYYY-MM-DD'),
+            }, {
+                auth: {
+                    username: 'admin',
+                    password: "AdminPass2025"
+                }
+            });
+            if (result.data.success) {
+                for (let i = 0; i < order.qty; i++) {
                     const key = await strapi.documents("api::key.key").create({
                         data: {
-                            code: result.data.regcode,
+                            code: result.data.regcodes[i],
                             duration: order.duration,
-                            endDate: result.data.validation.data.end_date,
-                            generatedDate: dayjs(result.data.validation.data.generated_at, 'YYYYMMDDHHmmss').toDate(),
+                            endDate: end_date.format('YYYYMMDD'),
                         }
                     })
                     list.push(key.documentId)
-                    dateInfo = result.data.validation.data
                 }
+                return await strapi.documents('api::order.order').update({
+                    documentId: orderId,
+                    data: {
+                        orderStatus: 'approved',
+                        endDate:  end_date.format('YYYYMMDD'),
+                        keys: list,
+                        // @ts-ignore
+                        group: 'g'+groupId,
+                    }
+                });
             }
-            return await strapi.documents('api::order.order').update({
-                documentId: orderId,
-                data: {
-                    orderStatus: 'approved',
-                    endDate: dateInfo.end_date,
-                    keys: list,
-                    //@ts-ignore
-                    group: 'g'+groupId,
-                    generatedDate: dayjs(dateInfo.generated_at, 'YYYYMMDDHHmmss').toDate(),
-                }
-            });
         }
         return false;
     },

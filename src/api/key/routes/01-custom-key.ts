@@ -15,6 +15,11 @@ export default {
             method: 'POST',
             path: '/keys/:id/customer-unbind',
             handler: 'key.customerUnbind',
+        },
+        {
+            method: 'POST',
+            path: '/keys/verify',
+            handler: 'key.verify',
         }
     ]
 }

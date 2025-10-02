@@ -3,6 +3,7 @@
  */
 
 import { factories } from '@strapi/strapi'
+import axios from "axios";
 
 export default factories.createCoreController('api::key.key', ({ strapi }) =>  ({
     async bind(ctx) {
@@ -46,6 +47,22 @@ export default factories.createCoreController('api::key.key', ({ strapi }) =>  (
         ctx.body = {
             success: true,
             message: '已提交申请'
+        }
+    },
+    async verify(ctx) {
+        const { regcode } = ctx.request.body;
+        const result = await axios.post('https://ea.neo-verse.cn/manage/api/validate_regcode', {
+            regcode: regcode
+        }, {
+            auth: {
+                username: 'admin',
+                password: "AdminPass2025"
+            }
+        });
+        if (result.data.success) {
+            return result.data;
+        } else {
+            ctx.badRequest('Bad request');
         }
     }
 }));
