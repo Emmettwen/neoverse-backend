@@ -77,6 +77,10 @@ export default factories.createCoreService('api::order.order', ({ strapi }) =>  
                 token,
                 regcode: order.code
             }, {
+                auth: {
+                    username: 'admin',
+                    password: "AdminPass2025"
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
