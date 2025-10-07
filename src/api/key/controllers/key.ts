@@ -64,5 +64,16 @@ export default factories.createCoreController('api::key.key', ({ strapi }) =>  (
         } else {
             ctx.badRequest('Bad request');
         }
+    },
+    async check(ctx) {
+        const { id:documentId } = ctx.params;
+        const key = await strapi.documents('api::key.key').findOne({
+            documentId
+        })
+        if (key) {
+            return await strapi.service('api::key.key').checkInformation(key);
+        } else {
+            return ctx.badRequest('Bad request');
+        }
     }
 }));

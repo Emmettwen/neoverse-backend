@@ -3,6 +3,11 @@ export default {
     routes: [
         {
             method: 'POST',
+            path: '/keys/verify',
+            handler: 'key.verify',
+        },
+        {
+            method: 'POST',
             path: '/keys/:id/bind',
             handler: 'key.bind',
         },
@@ -18,8 +23,8 @@ export default {
         },
         {
             method: 'POST',
-            path: '/keys/verify',
-            handler: 'key.verify',
+            path: '/keys/:id/check',
+            handler: 'key.check',
         }
     ]
 }

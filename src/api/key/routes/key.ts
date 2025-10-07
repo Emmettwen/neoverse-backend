@@ -4,4 +4,10 @@
 
 import { factories } from '@strapi/strapi';
 
-export default factories.createCoreRouter('api::key.key');
+export default factories.createCoreRouter('api::key.key', {
+    config: {
+        find: {
+            middlewares: ["api::key.update-key-status"],
+        }
+    }
+});
