@@ -48,7 +48,7 @@ export default factories.createCoreService('api::key.key', ({ strapi }) =>  ({
         }
     },
     async checkInformation(key){
-        if(key.binded == null) {
+        if(key.binded == null || key.binded === 'unbind') {
             console.log('还未绑定')
             const lastTime = dayjs(key.generatedDate)
             const freezeTime = 60;
