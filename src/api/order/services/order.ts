@@ -32,7 +32,7 @@ export default factories.createCoreService('api::order.order', ({ strapi }) =>  
         const end_date = start_date.add(order.duration, 'day');
         if (order) {
             let list = []
-            const result = await axios.post('https://ea.neo-verse.cn/manage/api/generate_batch', {
+            const result = await axios.post('https://ea.neo-verse100.cn/manage/api/generate_batch', {
                 end_date: end_date.format('YYYY-MM-DD'),
                 group_ids: groupId.toString(),
                 count: order.qty,
@@ -73,7 +73,7 @@ export default factories.createCoreService('api::order.order', ({ strapi }) =>  
         const order = await strapi.documents('api::order.order').findOne({documentId})
 
         try {
-            const response = await axios.post('https://ea.neo-verse.cn/admin/unbind', {
+            const response = await axios.post('https://ea.neo-verse100.cn/admin/unbind', {
                 token,
                 regcode: order.code
             }, {

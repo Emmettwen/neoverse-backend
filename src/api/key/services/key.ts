@@ -13,7 +13,7 @@ export default factories.createCoreService('api::key.key', ({ strapi }) =>  ({
         const key = await strapi.documents('api::key.key').findOne({documentId})
 
         try {
-            const response = await axios.post('https://ea.neo-verse.cn/admin/unbind', {
+            const response = await axios.post('https://ea.neo-verse100.cn/admin/unbind', {
                 token,
                 regcode: key.code
             }, {
@@ -49,14 +49,12 @@ export default factories.createCoreService('api::key.key', ({ strapi }) =>  ({
     },
     async checkInformation(key){
         if(key.binded == null || key.binded === 'unbind') {
-            console.log('还未绑定')
             const lastTime = dayjs(key.generatedDate)
             const freezeTime = 60;
             if (dayjs().diff(lastTime, 's') < freezeTime) {
-                console.log('查询时间太短')
                 return key;
             }
-            const response = await axios.get('https://ea.neo-verse.cn/admin/binding_info', {
+            const response = await axios.get('https://ea.neo-verse100.cn/admin/binding_info', {
                 params: {
                     regcode: key.code
                 },

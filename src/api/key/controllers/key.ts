@@ -51,7 +51,7 @@ export default factories.createCoreController('api::key.key', ({ strapi }) =>  (
     },
     async verify(ctx) {
         const { regcode } = ctx.request.body;
-        const result = await axios.post('https://ea.neo-verse.cn/manage/api/validate_regcode', {
+        const result = await axios.post('https://ea.neo-verse100.cn/manage/api/validate_regcode', {
             regcode: regcode
         }, {
             auth: {
